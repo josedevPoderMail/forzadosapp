@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:forzadoapp/onboarding/pages/onboarding_page1.dart';
 import 'package:forzadoapp/onboarding/pages/onboarding_page2.dart';
 import 'package:forzadoapp/onboarding/pages/onboarding_page3.dart';
-import 'package:forzadoapp/utils/constants.dart';
+import 'package:forzadoapp/utils/routes.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override

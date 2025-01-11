@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forzadoapp/utils/constants.dart';
+import 'package:forzadoapp/utils/routes.dart';
 
 void main() => runApp(const MyApp());
 

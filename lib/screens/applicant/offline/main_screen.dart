@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BajaForzadoScreen extends StatelessWidget {
-  const BajaForzadoScreen({super.key});
+class MainScreenOff extends StatelessWidget {
+  const MainScreenOff({super.key});
 
   @override
   Widget build(BuildContext context) {

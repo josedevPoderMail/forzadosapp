@@ -1,40 +1,39 @@
-// lib/onboarding/splash_screen.dart
 import 'package:flutter/material.dart';
-import 'package:forzadoapp/utils/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:forzadoapp/auth/services/session_service.dart';
+import 'package:forzadoapp/utils/routes.dart';
 
-class SplashScreen extends StatefulWidget {
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _checkOnboardingStatus();
-  }
-
-  Future<void> _checkOnboardingStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
-
-    await Future.delayed(Duration(seconds: 2));
-
-    if (hasSeenOnboarding) {
-      Navigator.pushReplacementNamed(context, AppRoutes.login);
-    } else {
-      prefs.setBool('hasSeenOnboarding', true);
-      Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
-    }
-  }
-
+class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
+    _initializeApp(context);
+    return Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
+  }
+
+  void _initializeApp(BuildContext context) async {
+    bool isLoggedIn = await SessionService.isLoggedIn();
+    int? userRole = await SessionService.getUserRole();
+
+    if (!isLoggedIn) {
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
+    } else {
+      switch (userRole) {
+        case 1:
+        case 5:
+          Navigator.pushReplacementNamed(context, AppRoutes.applicantMain);
+          break;
+        case 2:
+        case 6:
+          Navigator.pushReplacementNamed(context, AppRoutes.approverMain);
+          break;
+        case 3:
+        case 7:
+          Navigator.pushReplacementNamed(context, AppRoutes.executorMain);
+          break;
+        default:
+          Navigator.pushReplacementNamed(context, AppRoutes.main);
+      }
+    }
   }
 }
